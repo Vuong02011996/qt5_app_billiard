@@ -1,16 +1,26 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from PyQt5.QtWidgets import QApplication,\
+    QWidget, QComboBox, QLabel
+from PyQt5 import uic
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class UI(QWidget):
+    def __init__(self):
+        super().__init__()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        # loading the ui file with uic module
+        uic.loadUi('billiards.ui', self)
+
+        #find widgets in the ui file
+        self.combo = self.findChild(QComboBox, "comboBox")
+        self.combo.currentTextChanged.connect(self.combo_selected)
+        self.label = self.findChild(QLabel, "label")
+
+    def combo_selected(self):
+        item = self.combo.currentText()
+        self.label.setText("You selected : " + item)
+
+
+app = QApplication([])
+window = UI()
+window.show()
+app.exec_()
